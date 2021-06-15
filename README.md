@@ -1,4 +1,4 @@
-# rbtv-dl
+# Red Bull TV Downloader
 Red Bull TV Downloader in Python
 
 Usage: 
