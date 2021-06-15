@@ -6,10 +6,10 @@ Usage:
 
 Requirements:
 
-```ffmpeg
+``ffmpeg
 
 ffmpeg-python
 
 requests
 
-json```
+json``
