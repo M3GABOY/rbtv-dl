@@ -5,7 +5,11 @@ Usage:
 `rbtv-dl.py -l <URL> -o <OUTPUT_FOLDER>`
 
 Requirements:
-ffmpeg
+
+`ffmpeg
+
 ffmpeg-python
+
 requests
-json
+
+json`
