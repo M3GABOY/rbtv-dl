@@ -15,3 +15,8 @@ requests
 
 json
 ```
+
+Installing prerequisite packages:
+```
+pip3 install ffmpeg-python requests json
+```
