@@ -1,7 +1,6 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 import requests
 import json
-import ffmpeg
 import argparse
 from pathlib import Path
 from getpass import getpass
@@ -9,7 +8,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 from io import StringIO
 import sys, getopt
-
+import os
 
 token_url = "https://api.redbull.tv/v3/session?os_family=http"
 live_video_url= "https://dms.redbull.tv/v3/"
@@ -64,32 +63,46 @@ for j in links:
     token=response["token"]
     #print(token)
     #link="https://www.redbull.com/int-en/live/red-bull-bc-one-cypher-russia-2021"#video_source
-    identifier=link[31:36]
+    locale_string=link[23:31]
+    locale_check_validity=locale_string[0]+locale_string[len(locale_string)-1]
+    locale=link[24:30]
+    if(locale_check_validity == "//"):
+        locale=(locale[4:6]+'-'+locale[0:3].upper())
+        leftstrLoc=31
+        rightstrLoc=36
+    else:
+        locale=link[24:29]
+        locale=(locale[3:5]+'-'+locale[0:2].upper())
+        locale_string=link[23:30]
+        leftstrLoc=30
+        rightstrLoc=35
+    print(locale)
+    identifier=link[leftstrLoc:rightstrLoc]
     if(identifier == "live/"):
             type="live-videos"
     else:
-        mark=38
-        identifier=link[31:38]
+        mark=rightstrLoc+2
+        identifier=link[leftstrLoc:rightstrLoc+2]
         if(identifier == "videos/"):
             type="videos"
         else:
-            mark=40
-            identifier=link[31:40]
+            mark=rightstrLoc+4
+            identifier=link[leftstrLoc:rightstrLoc+4]
             if(identifier == "episodes/"):
                 type="episode-videos"
             else:
-                mark=37
-                identifier=link[31:37]
+                mark=rightstrLoc+1
+                identifier=link[leftstrLoc:rightstrLoc+1]
                 if(identifier == "films/"):
                     type="films"
                 else:
-                    mark=37
-                    identifier=link[31:37]
+                    mark=rightstrLoc+1
+                    identifier=link[leftstrLoc:rightstrLoc+1]
                     if(identifier == "shows/"):
                         type="shows"
 
     title=link[mark:len(link)]
-    get_video_url="https://www.redbull.com/v3/api/graphql/v1/v3/query/en-INT%3Een-INT?filter[type]="+type+"&page[limit]=1&filter[uriSlug]="+title+"&rb3Schema=v1:hero"
+    get_video_url="https://www.redbull.com/v3/api/graphql/v1/v3/query/"+locale+"%3E"+locale+"?filter[type]="+type+"&page[limit]=1&filter[uriSlug]="+title+"&rb3Schema=v1:hero"
 
     getvideo_return=downloader.get(get_video_url,verify=False)
     response=json.load(StringIO(getvideo_return.text))
@@ -115,6 +128,5 @@ for j in links:
     #page=downloader.get(video_link, verify=False)
     #print(page.content)
 
-    stream=ffmpeg.input(video_link)
-    stream=ffmpeg.output(stream, outpath+title+'.mp4')
-    ffmpeg.run(stream)
+os.system('ffmpeg -i '+video_link+' -c copy -bsf:a aac_adtstoasc '+outpath+title+'.mp4')
+
