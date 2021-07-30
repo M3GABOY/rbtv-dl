@@ -26,5 +26,6 @@ bs4
 
 Installing prerequisite packages:
 ```
-pip3 install ffmpeg-python requests json
+apt install ffmpeg (For Debian & Ubuntu)
+pip3 install requests json bs4 -y
 ```
