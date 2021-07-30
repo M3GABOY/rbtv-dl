@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 import requests
 import json
 import argparse
@@ -7,6 +7,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 import os
 from io import StringIO
 from bs4 import BeautifulSoup
+import re
 
 token_url = "https://api.redbull.tv/v3/session?os_family=http"
 live_video_url= "https://dms.redbull.tv/v3/"
@@ -39,6 +40,8 @@ parser.add_argument("-o", "--output", default='./',dest="output", help="Set Outp
 args=parser.parse_args()
 outpath=args.output
 link=args.url
+link=re.search("(?P<url>https?://[^\s]+)", link).group("url")
+
 if(link[len(link)-1] == '/'):
     link=link[:-1]
 
