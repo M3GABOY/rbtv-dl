@@ -21,11 +21,13 @@ requests
 
 json
 
+re
+
 bs4
 ```
 
 Installing prerequisite packages:
 ```
 apt install ffmpeg (For Debian & Ubuntu)
-pip3 install requests json bs4 -y
+pip3 install requests json bs4 re -y
 ```
