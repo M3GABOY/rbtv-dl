@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 import requests
 import json
 import argparse
@@ -39,6 +39,8 @@ parser.add_argument("-o", "--output", default='./',dest="output", help="Set Outp
 args=parser.parse_args()
 outpath=args.output
 link=args.url
+if(link[len(link)-1] == '/'):
+    link=link[:-1]
 
 downloader.headers.update(header)
 
