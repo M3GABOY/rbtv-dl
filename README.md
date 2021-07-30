@@ -1,21 +1,27 @@
 # Red Bull TV Downloader
 Red Bull TV Downloader in Python
 
-Usage: 
-`rbtv-dl.py -l <URL> -o <OUTPUT_FOLDER>`
+# Usage: 
+```
+rbtv-dl.py [-o OUTPUT] url
+positional arguments:
+  url                   URL of Video Page
 
-`e.g. rbtv-dl.py -l "https://www.redbull.com/int-en/episodes/abc-of-s2-e4-breaking" -o "/mnt/sda1/videos"`
+optional arguments:
+  -o OUTPUT, --output OUTPUT
+                        Set Output Location
+```
 
 Requirements:
 
 ```
 ffmpeg
 
-ffmpeg-python
-
 requests
 
 json
+
+bs4
 ```
 
 Installing prerequisite packages:
